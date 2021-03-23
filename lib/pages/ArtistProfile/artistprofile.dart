@@ -84,7 +84,9 @@ class _ArtistProfileState extends State<ArtistProfile> {
     super.initState();
   }
 
-  void getData() {
+  void getData() async {
+    url = await getUrl();
+
     paintingFuture = getPaintings(QueryModel(
       artist: widget.artist.uid,
       sale: false,
@@ -206,7 +208,7 @@ class _ArtistProfileState extends State<ArtistProfile> {
                                                               Share.shareFiles(
                                                                   [cache.path],
                                                                   text:
-                                                                      'Check my profile on Fazart: ${widget.artist.name} $url/paintings/${widget.artist.uid}');
+                                                                      'Check my profile on Fazart: ${widget.artist.name} $url/artist/${widget.artist.uid}');
                                                             },
                                                             child: Icon(
                                                               Icons.share,

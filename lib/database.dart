@@ -11,6 +11,7 @@ import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
 
 CollectionReference users = FirebaseFirestore.instance.collection("users");
+CollectionReference admin = FirebaseFirestore.instance.collection("admin");
 CollectionReference paintings =
     FirebaseFirestore.instance.collection("paintings");
 CollectionReference services =
@@ -61,6 +62,13 @@ Future<List<CustomUser>> getArtists() async {
     print(e);
     return null;
   }
+}
+
+Future<dynamic> getUrl() async {
+  try {
+    DocumentSnapshot metadata = await admin.doc("metadata").get();
+    return metadata.get("url");
+  } catch (e) {}
 }
 
 deletePainting(Painting painting) async {
