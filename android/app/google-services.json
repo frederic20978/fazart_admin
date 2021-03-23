@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "1002289587517",
+    "project_id": "fazart-2021",
+    "storage_bucket": "fazart-2021.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1002289587517:android:6297bffcedfaab8eb3d154",
+        "android_client_info": {
+          "package_name": "com.fazartin.fazart"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1002289587517-ov7bvkk8gc5spmeqpaie5l31rtoie75l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpgWpqNfKo5oK7xPXTt6E7faQCUILgkcg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1002289587517-ov7bvkk8gc5spmeqpaie5l31rtoie75l.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1002289587517-lqpr9tmadnpqbs8uqmtkd49oog1pjm35.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.fazartin.fazart"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1002289587517:android:b84f97433dd40367b3d154",
+        "android_client_info": {
+          "package_name": "com.fazartin.fazart_admin1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1002289587517-ov7bvkk8gc5spmeqpaie5l31rtoie75l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpgWpqNfKo5oK7xPXTt6E7faQCUILgkcg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1002289587517-ov7bvkk8gc5spmeqpaie5l31rtoie75l.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1002289587517-lqpr9tmadnpqbs8uqmtkd49oog1pjm35.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.fazartin.fazart"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
