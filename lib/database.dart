@@ -159,7 +159,7 @@ updateArtist({
       String url = uri.toString();
       await users.doc(userid).update({
         "time": DateTime.now(),
-        "url": url,
+        "image": url,
       });
     }
 
