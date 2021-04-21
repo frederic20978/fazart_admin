@@ -19,17 +19,26 @@ CollectionReference services =
 
 FirebaseStorage storage = FirebaseStorage.instance;
 
-Future<CustomUser> getUser(String uid) async {
-  DocumentSnapshot snapshot = await users.doc(uid).get();
-  CustomUser user = CustomUser(
-      uid: uid,
-      email: snapshot.get('email'),
-      image: snapshot.data().containsKey('url') ? snapshot.get('url') : null,
-      bio: snapshot.data().containsKey('bio') ? snapshot.get('bio') : null,
-      name: snapshot.get('name'),
-      hasBio: snapshot.data().containsKey('bio'),
-      isArtist: snapshot.get('isArtist'));
-  return user;
+Stream<CustomUser> getUser(String uid) {
+  // DocumentSnapshot snapshot = await users.doc(uid).get();
+  // CustomUser user = CustomUser(
+  //     uid: uid,
+  //     email: snapshot.get('email'),
+  // image: snapshot.data().containsKey('url') ? snapshot.get('url') : null,
+  // bio: snapshot.data().containsKey('bio') ? snapshot.get('bio') : null,
+  // name: snapshot.get('name'),
+  // hasBio: snapshot.data().containsKey('bio'),
+  // isArtist: snapshot.get('isArtist'));
+  // return user;
+  return users.doc(uid).snapshots().map((user) => CustomUser(
+        uid: uid,
+        email: user.get('email'),
+        image: user.data().containsKey('image') ? user.get('image') : null,
+        bio: user.data().containsKey('bio') ? user.get('bio') : null,
+        name: user.get('name'),
+        hasBio: user.data().containsKey('bio'),
+        isArtist: user.get('isArtist'),
+      ));
 }
 
 Stream<CustomUser> getArtist(String id) {
@@ -253,59 +262,91 @@ createService(String name, String artist, String description, num price,
   });
 }
 
-Future<List<Painting>> getPaintings(QueryModel q) async {
+Stream<List<Painting>> getPaintings(QueryModel q) {
   try {
-    QuerySnapshot snaps;
-    Query query = paintings;
-    query = query.where('artist', isEqualTo: q.artist);
+    // QuerySnapshot snaps;
+    // Query query = paintings;
+    // query = query.where('artist', isEqualTo: q.artist);
 
-    snaps = await query.get();
+    // snaps = await query.get();
 
-    var docs = snaps.docs;
+    // var docs = snaps.docs;
 
-    var list = docs
-        .map((snapshot) => Painting(
-              id: snapshot.id,
-              name: snapshot.get('name'),
-              artist: snapshot.get('artist'),
-              image: snapshot.get('image'),
-              price: snapshot.get('price'),
-              description: snapshot.get('description'),
-              relevance: snapshot.get('relevance'),
-              forSale: snapshot.get('onsale'),
-            ))
-        .toList();
-    return list;
+    // var list = docs
+    // .map((snapshot) => Painting(
+    //       id: snapshot.id,
+    //       name: snapshot.get('name'),
+    //       artist: snapshot.get('artist'),
+    //       image: snapshot.get('image'),
+    //       price: snapshot.get('price'),
+    //       description: snapshot.get('description'),
+    //       relevance: snapshot.get('relevance'),
+    //       forSale: snapshot.get('onsale'),
+    //         ))
+    //     .toList();
+    // return list;
+    //
+    //
+    return paintings
+        .where('artist', isEqualTo: q.artist)
+        .snapshots()
+        .map((snapshot1) => snapshot1.docs
+            .map((snapshot) => Painting(
+                  id: snapshot.id,
+                  name: snapshot.get('name'),
+                  artist: snapshot.get('artist'),
+                  image: snapshot.get('image'),
+                  price: snapshot.get('price'),
+                  description: snapshot.get('description'),
+                  relevance: snapshot.get('relevance'),
+                  forSale: snapshot.get('onsale'),
+                ))
+            .toList());
   } on Exception catch (e) {
     print(e);
     return null;
   }
 }
 
-Future<List<Service>> getServices(QueryModel q) async {
-  QuerySnapshot snaps;
-  Query query = services;
+Stream<List<Service>> getServices(QueryModel q) {
   try {
-    query = query.where('artist', isEqualTo: q.artist);
+    // QuerySnapshot snaps;
+    // Query query = services;
+    // query = query.where('artist', isEqualTo: q.artist);
 
-    snaps = await query.get();
-    var docs = snaps.docs;
-    var list = docs
-        .map((snapshot) => Service(
-              id: snapshot.id,
-              forSale: snapshot.get('onsale'),
-              name: snapshot.get('name'),
-              artist: snapshot.get('artist'),
-              price: snapshot.get('price'),
-              image: snapshot.get('image'),
-              sampleImages: snapshot.get('sampleImages'),
-              description: snapshot.get('description'),
-            ))
-        .toList();
-    // if (q.sort['type'] == "relevance") {
-    //   list.sort((a, b) => a.relevance.compareTo(b.relevance));
-    // }
-    return list;
+    // snaps = await query.get();
+    // var docs = snaps.docs;
+    // var list = docs
+    // .map((snapshot) => Service(
+    //       id: snapshot.id,
+    //       forSale: snapshot.get('onsale'),
+    //       name: snapshot.get('name'),
+    //       artist: snapshot.get('artist'),
+    //       price: snapshot.get('price'),
+    //       image: snapshot.get('image'),
+    //       sampleImages: snapshot.get('sampleImages'),
+    //       description: snapshot.get('description'),
+    //     ))
+    //     .toList();
+    // // if (q.sort['type'] == "relevance") {
+    // //   list.sort((a, b) => a.relevance.compareTo(b.relevance));
+    // // }
+    // return list;
+    return services
+        .where('artist', isEqualTo: q.artist)
+        .snapshots()
+        .map((snapshot1) => snapshot1.docs
+            .map((snapshot) => Service(
+                  id: snapshot.id,
+                  forSale: snapshot.get('onsale'),
+                  name: snapshot.get('name'),
+                  artist: snapshot.get('artist'),
+                  price: snapshot.get('price'),
+                  image: snapshot.get('image'),
+                  sampleImages: snapshot.get('sampleImages'),
+                  description: snapshot.get('description'),
+                ))
+            .toList());
   } on Exception catch (e) {
     print(e);
     return null;

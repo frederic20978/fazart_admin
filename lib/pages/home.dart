@@ -33,8 +33,8 @@ class _HomePageState extends State<HomePage> {
         stream: stream,
         builder: (context, snapshot1) {
           return snapshot1.data != null
-              ? FutureBuilder<CustomUser>(
-                  future: getUser(snapshot1.data.uid),
+              ? StreamBuilder<CustomUser>(
+                  stream: getUser(snapshot1.data.uid),
                   builder: (context, snapshot) {
                     if (snapshot.data != null) {
                       return snapshot.data.isArtist

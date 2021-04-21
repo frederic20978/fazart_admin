@@ -149,7 +149,6 @@ class _AddServiceState extends State<AddService> {
                   ],
                 ),
               ),
-              Divider(),
               Container(
                 height: 70,
                 child: Row(
@@ -193,7 +192,6 @@ class _AddServiceState extends State<AddService> {
                   ],
                 ),
               ),
-              Divider(),
               Container(
                 height: 100,
                 child: TextFormField(
@@ -222,7 +220,6 @@ class _AddServiceState extends State<AddService> {
                   ),
                 ),
               ),
-              Divider(),
               Container(
                 height: 100,
                 child: TextFormField(
@@ -251,7 +248,6 @@ class _AddServiceState extends State<AddService> {
                   ),
                 ),
               ),
-              Divider(),
               Container(
                 height: 100,
                 child: TextFormField(
@@ -280,36 +276,35 @@ class _AddServiceState extends State<AddService> {
                   ),
                 ),
               ),
-              Divider(),
-              Container(
-                height: 100,
-                child: TextFormField(
-                  validator: (value) =>
-                      value.isEmpty ? "Enter a valid ArtScore" : null,
-                  onChanged: (value) {
-                    setState(() {
-                      artScore = int.parse(value);
-                    });
-                  },
-                  keyboardType: TextInputType.number,
-                  maxLength: 1,
-                  decoration: InputDecoration(
-                    labelText: "Art Score",
-                    fillColor: Colors.white,
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.blue,
-                      ),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        width: .5,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Divider(),
+              // Divider(),
+              // Container(
+              //   height: 100,
+              //   child: TextFormField(
+              //     validator: (value) =>
+              //         value.isEmpty ? "Enter a valid ArtScore" : null,
+              //     onChanged: (value) {
+              //       setState(() {
+              //         artScore = int.parse(value);
+              //       });
+              //     },
+              //     keyboardType: TextInputType.number,
+              //     maxLength: 1,
+              //     decoration: InputDecoration(
+              //       labelText: "Art Score",
+              //       fillColor: Colors.white,
+              //       focusedBorder: OutlineInputBorder(
+              //         borderSide: BorderSide(
+              //           color: Colors.blue,
+              //         ),
+              //       ),
+              //       enabledBorder: OutlineInputBorder(
+              //         borderSide: BorderSide(
+              //           width: .5,
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // ),
               errorMessage == null
                   ? Container()
                   : Container(

@@ -21,8 +21,8 @@ class ArtistProfile extends StatefulWidget {
 }
 
 class _ArtistProfileState extends State<ArtistProfile> {
-  Future<List<Painting>> paintingFuture;
-  Future<List<Service>> serviceFuture;
+  Stream<List<Painting>> paintingFuture;
+  Stream<List<Service>> serviceFuture;
   int currentTab = 0;
   String url;
   bool editBio = false;
@@ -80,27 +80,11 @@ class _ArtistProfileState extends State<ArtistProfile> {
   @override
   void initState() {
     getData();
-
     super.initState();
   }
 
   void getData() async {
     url = await getUrl();
-
-    paintingFuture = getPaintings(QueryModel(
-      artist: widget.artist.uid,
-      sale: false,
-      sort: {"bool": false, "type": null, "desc": true},
-      filterArray: [],
-      priceRange: null,
-    ));
-    serviceFuture = getServices(QueryModel(
-      artist: widget.artist.uid,
-      sale: false,
-      sort: {"bool": false, "type": null, "desc": true},
-      filterArray: [],
-      priceRange: null,
-    ));
   }
 
   @override
@@ -120,8 +104,22 @@ class _ArtistProfileState extends State<ArtistProfile> {
                     label: Text('logout')),
               ],
             ),
-            body: FutureBuilder<List<dynamic>>(
-                future: currentTab == 0 ? paintingFuture : serviceFuture,
+            body: StreamBuilder<List<dynamic>>(
+                stream: currentTab == 0
+                    ? getPaintings(QueryModel(
+                        artist: widget.artist.uid,
+                        sale: false,
+                        sort: {"bool": false, "type": null, "desc": true},
+                        filterArray: [],
+                        priceRange: null,
+                      ))
+                    : getServices(QueryModel(
+                        artist: widget.artist.uid,
+                        sale: false,
+                        sort: {"bool": false, "type": null, "desc": true},
+                        filterArray: [],
+                        priceRange: null,
+                      )),
                 builder: (context, snapshot) {
                   return DefaultTabController(
                     initialIndex: currentTab,

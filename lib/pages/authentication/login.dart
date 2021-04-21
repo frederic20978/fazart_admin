@@ -105,7 +105,7 @@ class _LoginState extends State<Login> {
                                   error = result;
                                 });
                               } else {
-                                Navigator.pushReplacementNamed(context, '/');
+                                // Navigator.popAndPushNamed(context, '/');
                               }
                             }
                           },
