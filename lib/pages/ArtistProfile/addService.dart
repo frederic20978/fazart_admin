@@ -308,6 +308,7 @@ class _AddServiceState extends State<AddService> {
               errorMessage == null
                   ? Container()
                   : Container(
+                      height: 20,
                       child: Text(
                         errorMessage,
                         style: TextStyle(color: Colors.red),
@@ -319,6 +320,7 @@ class _AddServiceState extends State<AddService> {
                     color: Colors.blue,
                     onPressed: () async {
                       if (_formkey.currentState.validate() && image != null) {
+                        print('hi');
                         if (imageList.length > 2) {
                           try {
                             setState(() {
@@ -336,9 +338,10 @@ class _AddServiceState extends State<AddService> {
                             });
                             print('error not uploaded');
                           }
+                        } else {
+                          errorMessage = 'Atleast 3 sample images required';
+                          print(errorMessage);
                         }
-                      } else {
-                        errorMessage = 'Atleast 3 sample images required';
                       }
                     },
                     child: loading
