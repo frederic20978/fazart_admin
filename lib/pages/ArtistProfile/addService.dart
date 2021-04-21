@@ -259,7 +259,7 @@ class _AddServiceState extends State<AddService> {
                     });
                   },
                   keyboardType: TextInputType.number,
-                  maxLength: 4,
+                  maxLength: 7,
                   decoration: InputDecoration(
                     labelText: "Price",
                     fillColor: Colors.white,
