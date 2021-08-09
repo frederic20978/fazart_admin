@@ -55,15 +55,37 @@ class _UpdateBioState extends State<UpdateBio> {
             return Form(
               key: _formkey,
               child: ListView(children: [
-                Center(
-                  child: Text(
-                    'Update Bio',
-                    style: h3,
-                  ),
-                ),
                 SizedBox(
                   height: 10,
                 ),
+                Container(
+                  height: 80,
+                  child: TextFormField(
+                    initialValue: widget.artist.name,
+                    onChanged: (value) {
+                      setState(() {
+                        name = value;
+                      });
+                    },
+                    keyboardType: TextInputType.multiline,
+                    maxLength: 20,
+                    decoration: InputDecoration(
+                      labelText: "Name",
+                      fillColor: Colors.white,
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.blue,
+                        ),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          width: .5,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Divider(),
                 Container(
                   height: 300,
                   child: Row(
@@ -123,35 +145,7 @@ class _UpdateBioState extends State<UpdateBio> {
                 ),
                 Divider(),
                 Container(
-                  height: 100,
-                  child: TextFormField(
-                    initialValue: widget.artist.name,
-                    onChanged: (value) {
-                      setState(() {
-                        name = value;
-                      });
-                    },
-                    keyboardType: TextInputType.multiline,
-                    maxLength: 20,
-                    decoration: InputDecoration(
-                      labelText: "Name",
-                      fillColor: Colors.white,
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.blue,
-                        ),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          width: .5,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Divider(),
-                Container(
-                  height: 200,
+                  height: 80,
                   child: TextFormField(
                     initialValue: widget.artist.bio,
                     onChanged: (value) {
@@ -181,7 +175,7 @@ class _UpdateBioState extends State<UpdateBio> {
                 Container(
                   height: 50,
                   child: FlatButton(
-                      color: Colors.blue,
+                      color: Colors.red,
                       onPressed: () async {
                         try {
                           await updateArtist(

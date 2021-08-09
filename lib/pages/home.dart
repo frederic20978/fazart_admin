@@ -1,5 +1,6 @@
 import 'package:fazart_admin1/pages/ArtistProfile/artistprofile.dart';
 import 'package:fazart_admin1/pages/authentication/register.dart';
+import 'package:fazart_admin1/shared/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:fazart_admin1/services/auth.dart';
 import 'package:fazart_admin1/models/customUser.dart';
@@ -44,16 +45,37 @@ class _HomePageState extends State<HomePage> {
                                 title: Text('login'),
                                 centerTitle: true,
                               ),
-                              body: isLogin
-                                  ? Login(
-                                      changeLoginState: changeToRegister,
-                                    )
-                                  : Register(
-                                      changeLoginState: changeToRegister,
+                              body: Container(
+                                padding: EdgeInsets.symmetric(horizontal: 5),
+                                child: Column(
+                                  children: [
+                                    SizedBox(
+                                      height: 200,
                                     ),
-                            );
+                                    Text(
+                                      "You have a Normal account. Do you wish to apply for artist account?",
+                                      style: h6color,
+                                    ),
+                                    RaisedButton(
+                                      onPressed: () {
+                                        convertToArtist(snapshot.data.uid);
+                                      },
+                                      child: InkWell(
+                                          child: Text(
+                                        "Apply",
+                                        style: TextStyle(color: Colors.white),
+                                      )),
+                                    )
+                                  ],
+                                ),
+                              ));
                     } else {
-                      return Container();
+                      return Scaffold(
+                          appBar: AppBar(
+                            title: Text('Fazart'),
+                            centerTitle: true,
+                          ),
+                          body: Text('Content Loading'));
                     }
                   })
               : Scaffold(

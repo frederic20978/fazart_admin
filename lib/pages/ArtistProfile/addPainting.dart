@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:fazart_admin1/database.dart';
 import 'package:fazart_admin1/models/customUser.dart';
+import 'package:fazart_admin1/shared/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
@@ -23,6 +24,8 @@ class _AddPaintingState extends State<AddPainting> {
   bool imageAdded = false;
   bool uploading = false;
   bool loading = false;
+  bool sale = false;
+  num height, width;
 
   Future getImage(BuildContext context) async {
     try {
@@ -76,9 +79,9 @@ class _AddPaintingState extends State<AddPainting> {
                             child: Container(
                               margin: EdgeInsets.symmetric(horizontal: 2),
                               decoration: BoxDecoration(
-                                  image:
-                                      DecorationImage(image: FileImage(_image)),
-                                  border: Border.all(width: .5)),
+                                image:
+                                    DecorationImage(image: FileImage(_image)),
+                              ),
                               height: 260,
                               width: 260,
                             ),
@@ -133,7 +136,7 @@ class _AddPaintingState extends State<AddPainting> {
                 ),
               ),
               Container(
-                height: 100,
+                height: 80,
                 child: TextFormField(
                   validator: (value) =>
                       value.isEmpty ? "Enter a valid Description" : null,
@@ -160,20 +163,96 @@ class _AddPaintingState extends State<AddPainting> {
                   ),
                 ),
               ),
+              Row(
+                children: [
+                  Text(
+                    'For Sale',
+                    style: h6color,
+                  ),
+                  Switch(
+                      value: sale,
+                      activeColor: Colors.redAccent,
+                      onChanged: (value) {
+                        setState(() {
+                          sale = value;
+                        });
+                      }),
+                ],
+              ),
+              sale
+                  ? Container(
+                      height: 100,
+                      child: TextFormField(
+                        validator: (value) =>
+                            value.isEmpty ? "Enter a valid price" : null,
+                        onChanged: (value) {
+                          setState(() {
+                            price = int.parse(value);
+                          });
+                        },
+                        keyboardType: TextInputType.number,
+                        maxLength: 7,
+                        decoration: InputDecoration(
+                          labelText: "Price",
+                          fillColor: Colors.white,
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.blue,
+                            ),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              width: .5,
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                  : Container(),
+              Divider(),
               Container(
-                height: 100,
+                height: 80,
                 child: TextFormField(
                   validator: (value) =>
-                      value.isEmpty ? "Enter a valid price" : null,
+                      value.isEmpty ? "Enter a valid Height" : null,
                   onChanged: (value) {
                     setState(() {
-                      price = int.parse(value);
+                      height = int.parse(value);
                     });
                   },
                   keyboardType: TextInputType.number,
-                  maxLength: 7,
+                  maxLength: 4,
                   decoration: InputDecoration(
-                    labelText: "Price",
+                    labelText: "Height in cm",
+                    fillColor: Colors.white,
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.blue,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        width: .5,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Divider(),
+              Container(
+                height: 80,
+                child: TextFormField(
+                  validator: (value) =>
+                      value.isEmpty ? "Enter a valid Width" : null,
+                  onChanged: (value) {
+                    setState(() {
+                      width = int.parse(value);
+                    });
+                  },
+                  keyboardType: TextInputType.number,
+                  maxLength: 4,
+                  decoration: InputDecoration(
+                    labelText: "Width in cm",
                     fillColor: Colors.white,
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(
@@ -220,7 +299,7 @@ class _AddPaintingState extends State<AddPainting> {
               Container(
                 height: 50,
                 child: FlatButton(
-                    color: Colors.blue,
+                    color: Colors.purple[900],
                     onPressed: () async {
                       try {
                         if (_formkey.currentState.validate() &&
@@ -229,7 +308,7 @@ class _AddPaintingState extends State<AddPainting> {
                             loading = true;
                           });
                           await createPainting(title, widget.artist.uid,
-                              description, price, _image);
+                              description, price, _image, sale, height, width);
                           Scaffold.of(context1).showSnackBar(
                               SnackBar(content: Text("Successfully uploaded")));
                           print("successfully uploaded");
@@ -254,7 +333,10 @@ class _AddPaintingState extends State<AddPainting> {
                                 child: Center(
                                   child: CircularProgressIndicator(),
                                 )))
-                        : Text('Submit')),
+                        : Text(
+                            'Submit',
+                            style: TextStyle(color: Colors.white),
+                          )),
               )
             ]),
           ),

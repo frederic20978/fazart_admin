@@ -72,17 +72,13 @@ class _SingleServiceState extends State<SingleService> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      padding: EdgeInsets.symmetric(horizontal: 5),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
                             widget.service.name,
                             style: h8.copyWith(color: Color(0xFF2699FB)),
-                          ),
-                          Text(
-                            "INR${widget.service.price}",
-                            style: h8,
                           ),
                         ],
                       ),
@@ -98,12 +94,25 @@ class _SingleServiceState extends State<SingleService> {
                         fit: BoxFit.cover,
                       ),
                     ),
+                    SizedBox(
+                      height: 4,
+                    ),
+                    Center(
+                      child: Text(
+                        "INR${widget.service.price}",
+                        style: h6color,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 4,
+                    ),
                     Container(
                       height: 40,
                       padding: EdgeInsets.all(3),
                       color: Color(0x7dc9c9c9),
                       child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -114,11 +123,17 @@ class _SingleServiceState extends State<SingleService> {
                                   value: switchValue,
                                   onChanged: (newValue) async {
                                     try {
-                                      await changeForSaleStateService(
-                                          widget.service, newValue);
-                                      setState(() {
-                                        switchValue = newValue;
-                                      });
+                                      if (widget.service.price != null) {
+                                        await changeForSaleStateService(
+                                            widget.service, newValue);
+                                        setState(() {
+                                          switchValue = newValue;
+                                        });
+                                      } else {
+                                        Scaffold.of(context).showSnackBar(SnackBar(
+                                            content: Text(
+                                                "please update the Service. Price is required for Selling")));
+                                      }
                                     } catch (e) {
                                       print(e);
                                     }
@@ -126,12 +141,26 @@ class _SingleServiceState extends State<SingleService> {
                                     widget.refresh();
                                   },
                                 ),
+                                Container(
+                                  width: 30,
+                                  child: IconButton(
+                                    onPressed: () async {
+                                      var res = await Navigator.pushNamed(
+                                          context, '/artisteditservice',
+                                          arguments: widget.service);
+                                      if (res != null) {
+                                        setState(() {
+                                          switchValue = res;
+                                        });
+                                      }
+                                    },
+                                    icon: Icon(Icons.edit),
+                                  ),
+                                )
                               ],
                             ),
                             Container(
-                              width: 50,
-                              height: 50,
-                              margin: EdgeInsets.symmetric(horizontal: 2),
+                              width: 30,
                               child: IconButton(
                                 onPressed: () {
                                   showAlertDialog(context);
@@ -139,7 +168,7 @@ class _SingleServiceState extends State<SingleService> {
                                 icon: Icon(Icons.delete),
                                 color: Colors.red,
                               ),
-                            )
+                            ),
                           ]),
                     )
                   ],

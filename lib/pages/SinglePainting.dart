@@ -73,79 +73,116 @@ class _SinglePaintingState extends State<SinglePainting> {
                 });
               }
             },
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(5),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    height: 25,
-                    padding: EdgeInsets.all(2),
-                    color: Color(0x7dc9c9c9),
-                    child: Row(
+            child: Card(
+              margin: EdgeInsets.all(0),
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 6, vertical: 8),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 5),
+                      child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Expanded(
-                            child: Text(
-                              widget.painting.name,
-                              style: h8.copyWith(color: Colors.blue),
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
                           Text(
-                            "INR${widget.painting.price}",
-                            style: h8,
-                          )
-                        ]),
-                  ),
-                  Container(
-                    alignment: Alignment.topLeft,
-                    height: 200,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: NetworkImage(widget.painting.image))),
-                  ),
-                  Container(
-                    height: 40,
-                    padding: EdgeInsets.all(3),
-                    color: Color(0x7dc9c9c9),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text("For Sale"),
-                              Switch(
-                                activeColor: Colors.blue,
-                                value: switchValue,
-                                onChanged: (newValue) async {
-                                  await changeForSaleState(
-                                      widget.painting, newValue);
-                                  setState(() {
-                                    switchValue = newValue;
-                                  });
-                                  widget.refresh();
-                                },
-                              ),
-                            ],
+                            widget.painting.name,
+                            style: h8.copyWith(color: Color(0xFF2699FB)),
                           ),
-                          Container(
-                            width: 50,
-                            height: 50,
-                            margin: EdgeInsets.symmetric(horizontal: 2),
-                            child: IconButton(
-                              onPressed: () {
-                                showAlertDialog(context);
-                              },
-                              icon: Icon(Icons.delete),
-                              color: Colors.red,
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 6,
+                    ),
+                    Container(
+                      width: double.infinity,
+                      child: Image.network(
+                        widget.painting.image,
+                        height: 160,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 4,
+                    ),
+                    Center(
+                      child: Text(
+                        "INR${widget.painting.price}",
+                        style: h6color,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 4,
+                    ),
+                    Container(
+                      height: 40,
+                      padding: EdgeInsets.all(3),
+                      color: Color(0x7dc9c9c9),
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text("For Sale"),
+                                Switch(
+                                  activeColor: Colors.blue,
+                                  value: switchValue,
+                                  onChanged: (newValue) async {
+                                    try {
+                                      if (widget.painting.price != null) {
+                                        await changeForSaleState(
+                                            widget.painting, newValue);
+                                        setState(() {
+                                          switchValue = newValue;
+                                        });
+                                      } else {
+                                        Scaffold.of(context).showSnackBar(SnackBar(
+                                            content: Text(
+                                                "please update the painting. Price, Height & Width are required for Selling")));
+                                      }
+                                    } catch (e) {
+                                      print(e);
+                                    }
+
+                                    widget.refresh();
+                                  },
+                                ),
+                                Container(
+                                  width: 30,
+                                  child: IconButton(
+                                    onPressed: () async {
+                                      var res = await Navigator.pushNamed(
+                                          context, '/artisteditpainting',
+                                          arguments: widget.painting);
+                                      if (res != null) {
+                                        setState(() {
+                                          switchValue = res;
+                                        });
+                                      }
+                                    },
+                                    icon: Icon(Icons.edit),
+                                  ),
+                                )
+                              ],
                             ),
-                          )
-                        ]),
-                  ),
-                ],
+                            Container(
+                              width: 30,
+                              child: IconButton(
+                                onPressed: () {
+                                  showAlertDialog(context);
+                                },
+                                icon: Icon(Icons.delete),
+                                color: Colors.red,
+                              ),
+                            ),
+                          ]),
+                    )
+                  ],
+                ),
               ),
             ),
           );

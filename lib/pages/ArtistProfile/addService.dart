@@ -27,6 +27,7 @@ class _AddServiceState extends State<AddService> {
   File image;
   bool imageAdded = false;
   bool loading = false;
+  bool sale = false;
 
   Future getImage(BuildContext context) async {
     try {
@@ -60,8 +61,8 @@ class _AddServiceState extends State<AddService> {
               child: Container(
                 margin: EdgeInsets.symmetric(horizontal: 2),
                 decoration: BoxDecoration(
-                    image: DecorationImage(image: FileImage(_image)),
-                    border: Border.all(width: .5)),
+                  image: DecorationImage(image: FileImage(_image)),
+                ),
                 height: 50,
                 width: 50,
               ),
@@ -92,7 +93,7 @@ class _AddServiceState extends State<AddService> {
             key: _formkey,
             child: ListView(children: [
               Container(
-                height: 300,
+                // height: 300,
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -122,9 +123,8 @@ class _AddServiceState extends State<AddService> {
                             child: Container(
                               margin: EdgeInsets.symmetric(horizontal: 2),
                               decoration: BoxDecoration(
-                                  image:
-                                      DecorationImage(image: FileImage(image)),
-                                  border: Border.all(width: .5)),
+                                image: DecorationImage(image: FileImage(image)),
+                              ),
                               height: 250,
                               width: 240,
                             ),
@@ -221,7 +221,7 @@ class _AddServiceState extends State<AddService> {
                 ),
               ),
               Container(
-                height: 100,
+                height: 80,
                 child: TextFormField(
                   validator: (value) =>
                       value.isEmpty ? "Enter a valid Description" : null,
@@ -248,34 +248,78 @@ class _AddServiceState extends State<AddService> {
                   ),
                 ),
               ),
-              Container(
-                height: 100,
-                child: TextFormField(
-                  validator: (value) =>
-                      value.isEmpty ? "Enter a valid Price" : null,
-                  onChanged: (value) {
-                    setState(() {
-                      price = int.parse(value);
-                    });
-                  },
-                  keyboardType: TextInputType.number,
-                  maxLength: 7,
-                  decoration: InputDecoration(
-                    labelText: "Price",
-                    fillColor: Colors.white,
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.blue,
-                      ),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        width: .5,
-                      ),
-                    ),
+              Row(
+                children: [
+                  Text(
+                    'For Sale',
+                    style: h6color,
                   ),
-                ),
+                  Switch(
+                      value: sale,
+                      activeColor: Colors.redAccent,
+                      onChanged: (value) {
+                        setState(() {
+                          sale = value;
+                        });
+                      }),
+                ],
               ),
+
+              sale
+                  ? Column(
+                      children: [
+                        Container(
+                          height: 80,
+                          child: TextFormField(
+                            validator: (value) =>
+                                value.isEmpty ? "Enter a valid Price" : null,
+                            onChanged: (value) {
+                              setState(() {
+                                price = int.parse(value);
+                              });
+                            },
+                            keyboardType: TextInputType.number,
+                            maxLength: 7,
+                            decoration: InputDecoration(
+                              labelText: "Price",
+                              fillColor: Colors.white,
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.blue,
+                                ),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  width: .5,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Divider(),
+                        InkWell(
+                          onTap: () {
+                            print('hi2');
+                          },
+                          child: Row(
+                            children: [
+                              Container(
+                                height: 50,
+                                width: 50,
+                                child: Icon(Icons.add),
+                              ),
+                              Text(
+                                'Add questions for custsomers',
+                                style: h6color,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Divider(),
+                      ],
+                    )
+                  : Container(),
+
               // Divider(),
               // Container(
               //   height: 100,
@@ -317,17 +361,23 @@ class _AddServiceState extends State<AddService> {
               Container(
                 height: 60,
                 child: FlatButton(
-                    color: Colors.blue,
+                    color: Colors.redAccent,
                     onPressed: () async {
                       if (_formkey.currentState.validate() && image != null) {
-                        print('hi');
                         if (imageList.length > 2) {
                           try {
                             setState(() {
                               loading = true;
                             });
-                            await createService(title, widget.artist.uid,
-                                description, price, images, image);
+                            await createService(
+                              title,
+                              widget.artist.uid,
+                              description,
+                              price,
+                              images,
+                              image,
+                              sale,
+                            );
                             Scaffold.of(context1).showSnackBar(SnackBar(
                                 content: Text("Successfully uploaded")));
                             print("successfully uploaded");
@@ -339,7 +389,10 @@ class _AddServiceState extends State<AddService> {
                             print('error not uploaded');
                           }
                         } else {
-                          errorMessage = 'Atleast 3 sample images required';
+                          setState(() {
+                            errorMessage =
+                                'Atleast 3 samples of your previous work required';
+                          });
                           print(errorMessage);
                         }
                       }

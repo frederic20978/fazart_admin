@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-final primaryColor = Colors.greenAccent[700];
+final primaryColor = Colors.redAccent;
 
 final contrastText = TextStyle(
     color: primaryColor, fontFamily: 'Poppins', fontWeight: FontWeight.w700);

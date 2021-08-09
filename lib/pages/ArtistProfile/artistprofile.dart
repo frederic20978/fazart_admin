@@ -93,7 +93,7 @@ class _ArtistProfileState extends State<ArtistProfile> {
         ? UpdateBio(artist: widget.artist)
         : Scaffold(
             appBar: AppBar(
-              title: Text(widget.artist.name),
+              title: Text("Profile"),
               centerTitle: true,
               actions: [
                 FlatButton.icon(
@@ -138,7 +138,7 @@ class _ArtistProfileState extends State<ArtistProfile> {
                                     currentTab = tab;
                                   });
                                 },
-                                indicatorColor: Colors.blue,
+                                indicatorColor: Colors.redAccent,
                                 tabs: [
                                   Tab(
                                     text: "ARTWORKS",
@@ -150,7 +150,7 @@ class _ArtistProfileState extends State<ArtistProfile> {
                               ),
                               pinned: true,
                               backgroundColor: Colors.white,
-                              expandedHeight: 260.0,
+                              expandedHeight: 280.0,
                               collapsedHeight: 1,
                               flexibleSpace: FlexibleSpaceBar(
                                 collapseMode: CollapseMode.pin,
@@ -223,6 +223,26 @@ class _ArtistProfileState extends State<ArtistProfile> {
                                                         overflow:
                                                             TextOverflow.clip,
                                                       ),
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .end,
+                                                        children: [
+                                                          FlatButton.icon(
+                                                              onPressed: () {
+                                                                Navigator.pushNamed(
+                                                                    context,
+                                                                    '/updatebio',
+                                                                    arguments:
+                                                                        widget
+                                                                            .artist);
+                                                              },
+                                                              icon: Icon(
+                                                                  Icons.edit),
+                                                              label: Text(
+                                                                  'Edit Bio'))
+                                                        ],
+                                                      )
                                                     ],
                                                   ),
                                                 ),
@@ -233,30 +253,19 @@ class _ArtistProfileState extends State<ArtistProfile> {
                                             height: 10,
                                           ),
                                           Container(
-                                            height: 20,
+                                            height: 40,
                                             child: Row(
                                               mainAxisAlignment:
                                                   MainAxisAlignment
                                                       .spaceBetween,
                                               children: [
-                                                Expanded(
-                                                    child: FlatButton(
-                                                        color: Colors.blue,
-                                                        onPressed: () {
-                                                          Navigator.pushNamed(
-                                                              context,
-                                                              '/updatebio',
-                                                              arguments: widget
-                                                                  .artist);
-                                                        },
-                                                        child:
-                                                            Text('edit bio'))),
                                                 SizedBox(
-                                                  width: 10,
+                                                  width: 5,
                                                 ),
                                                 Expanded(
                                                     child: FlatButton(
-                                                        color: Colors.blue,
+                                                        color:
+                                                            Colors.purple[900],
                                                         onPressed: () async {
                                                           await Navigator.pushNamed(
                                                               context,
@@ -268,13 +277,17 @@ class _ArtistProfileState extends State<ArtistProfile> {
                                                           });
                                                         },
                                                         child: Text(
-                                                            'Add Painting'))),
+                                                          'Add Painting',
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.white),
+                                                        ))),
                                                 SizedBox(
-                                                  width: 10,
+                                                  width: 20,
                                                 ),
                                                 Expanded(
                                                     child: FlatButton(
-                                                        color: Colors.blue,
+                                                        color: Colors.redAccent,
                                                         onPressed: () async {
                                                           await Navigator.pushNamed(
                                                               context,
@@ -286,7 +299,10 @@ class _ArtistProfileState extends State<ArtistProfile> {
                                                           });
                                                         },
                                                         child: Text(
-                                                            'Add Service')))
+                                                            'Add Service'))),
+                                                SizedBox(
+                                                  width: 5,
+                                                ),
                                               ],
                                             ),
                                           ),
