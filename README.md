@@ -1,16 +1,10 @@
 # fazart_admin1
 
-A new Flutter project.
+Its a Console App for Artists associated with Fazart to maintian their Profile updated with new works.
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Fazart is a collective environment for artists to sell their artworks and enthusiasts can get hold of artworks from their favorite artists.
+Want a hassle free experience finding audience and selling your work?
+Fazart is a platform for artists where you can sell your works and reach more buyers( and audience) easily.
+Just sit back and focus on ur work and we will manage the rest.
+Our aim is to arrange a collective space for all kind of artworks and we believe, with support from artists like you we can develop and make artwork(customized too) an easy deal for artists and clients
